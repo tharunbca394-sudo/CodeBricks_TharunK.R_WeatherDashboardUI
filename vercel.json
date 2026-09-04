@@ -1,0 +1,26 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/weather-app/index.html"
+    },
+    {
+      "source": "/index.html",
+      "destination": "/weather-app/index.html"
+    },
+    {
+      "source": "/css/:path*",
+      "destination": "/weather-app/css/:path*"
+    },
+    {
+      "source": "/js/:path*",
+      "destination": "/weather-app/js/:path*"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/weather-app/assets/:path*"
+    }
+  ]
+}
