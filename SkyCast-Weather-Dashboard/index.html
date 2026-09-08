@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkyCast - A responsive weather dashboard showing current weather and forecast."
+    >
+
+    <title>SkyCast | Weather Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- App Container -->
+    <main class="weather-app">
+
+        <!-- Header -->
+        <header class="app-header">
+
+            <div class="brand">
+                <div class="brand-icon">☁</div>
+
+                <div>
+                    <h1>SkyCast</h1>
+                    <p>Weather Dashboard</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme">
+                    <span class="theme-icon">☾</span>
+                </button>
+                <button class="location-btn" id="locationBtn" type="button">
+                    <span>⌖</span>
+                    <span>Use My Location</span>
+                </button>
+            </div>
+
+        </header>
+
+
+        <!-- Search Section -->
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <span class="search-icon" aria-hidden="true">⌕</span>
+
+                <input
+                    type="text"
+                    id="cityInput"
+                    placeholder="Search for a city..."
+                    autocomplete="off"
+                >
+
+                <button class="clear-search hidden" id="clearSearch" type="button" aria-label="Clear search">×</button>
+                <button
+                    id="searchBtn"
+                    type="button"
+                >
+                    Search
+                </button>
+
+            </div>
+            <p class="search-hint">Try a city name, then press <kbd>Enter</kbd> to search</p>
+            <div class="search-tools">
+                <div class="recent-searches hidden" id="recentSearches"></div>
+                <button class="unit-toggle" id="unitToggle" type="button" aria-label="Switch to Fahrenheit">°C</button>
+            </div>
+
+        </section>
+
+
+        <!-- Loading State -->
+        <div
+            class="loading-state hidden"
+            id="loadingState"
+        >
+            <div class="loader"></div>
+            <p>Fetching weather data...</p>
+        </div>
+
+
+        <!-- Error Message -->
+        <div
+            class="error-message hidden"
+            id="errorMessage"
+            role="alert"
+        >
+            <span>⚠</span>
+            <p id="errorText">Something went wrong.</p>
+        </div>
+
+
+        <!-- Weather Dashboard -->
+        <section
+            class="dashboard hidden"
+            id="dashboard"
+        >
+
+            <!-- Current Weather -->
+            <section class="current-weather-card">
+
+                <div class="weather-location">
+
+                    <div>
+                        <p class="location-label">CURRENT WEATHER</p>
+
+                        <h2 id="cityName">
+                            Chennai, India
+                        </h2>
+
+                        <p id="weatherDate">
+                            Today
+                        </p>
+                    </div>
+
+                    <div class="weather-status">
+                        <div
+                            class="weather-icon"
+                            id="weatherIcon"
+                        >
+                            ☀️
+                        </div>
+
+                        <p id="weatherCondition">
+                            Clear Sky
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="temperature-section">
+
+                    <div class="temperature">
+                        <span id="temperature">--</span>
+                        <span class="degree">°C</span>
+                    </div>
+
+                    <p>
+                        Feels like
+                        <strong id="feelsLike">--</strong><span id="feelsUnit">°C</span>
+                    </p>
+
+                </div>
+
+
+                <!-- Weather Details -->
+                <div class="weather-details">
+
+                    <div class="detail-card">
+
+                        <span class="detail-icon">💧</span>
+
+                        <div>
+                            <span class="detail-label">
+                                Humidity
+                            </span>
+
+                            <strong id="humidity">
+                                --%
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <span class="detail-icon">💨</span>
+
+                        <div>
+                            <span class="detail-label">
+                                Wind Speed
+                            </span>
+
+                            <strong id="windSpeed">
+                                -- km/h
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <span class="detail-icon">👁</span>
+
+                        <div>
+                            <span class="detail-label">
+                                Visibility
+                            </span>
+
+                            <strong id="visibility">
+                                -- km
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <span class="detail-icon">🌡</span>
+
+                        <div>
+                            <span class="detail-label">
+                                Pressure
+                            </span>
+
+                            <strong id="pressure">
+                                -- hPa
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="detail-card air-quality-card">
+                        <span class="detail-icon">🌿</span>
+                        <div>
+                            <span class="detail-label">Air Quality</span>
+                            <strong id="airQuality">-- AQI</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p class="last-updated">Updated <strong id="lastUpdated">--:--</strong></p>
+
+            </section>
+
+
+            <!-- Forecast -->
+            <section class="forecast-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <p class="section-label">
+                            WEATHER OUTLOOK
+                        </p>
+
+                        <h2>5-Day Forecast</h2>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="forecast-grid"
+                    id="forecastGrid"
+                >
+
+                    <!-- Forecast cards will be generated by JavaScript -->
+
+                </div>
+
+            </section>
+
+
+            <!-- Sunrise / Sunset -->
+            <section class="sun-section">
+
+                <div class="sun-card">
+
+                    <span class="sun-icon">🌅</span>
+
+                    <div>
+                        <span>Sunrise</span>
+                        <strong id="sunrise">
+                            --:--
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="sun-card">
+
+                    <span class="sun-icon">🌇</span>
+
+                    <div>
+                        <span>Sunset</span>
+                        <strong id="sunset">
+                            --:--
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+            <div class="sun-progress-card">
+                <div class="sun-progress-labels">
+                    <span>Daylight progress</span>
+                    <strong id="daylightProgress">--%</strong>
+                </div>
+                <div class="sun-progress-track">
+                    <span id="sunProgress"></span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Initial / Empty State -->
+        <section
+            class="empty-state"
+            id="emptyState"
+        >
+
+            <div class="empty-icon">
+                ☁️
+            </div>
+
+            <h2>Check the Weather</h2>
+
+            <p>
+                Search for a city to get the latest weather
+                information and forecast.
+            </p>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="app-footer">
+
+            <p>
+                SkyCast Weather Dashboard
+            </p>
+
+            <span>•</span>
+
+            <p>
+                Powered by Open-Meteo
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
